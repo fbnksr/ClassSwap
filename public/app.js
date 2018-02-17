@@ -1,5 +1,7 @@
+// create angular module and attach html to it
 var app = angular.module("myapp",['ngRoute'])
 
+// router for home page; tells node what html to load up
 app.config(function($routeProvider) {
   $routeProvider
     .when("/", {
