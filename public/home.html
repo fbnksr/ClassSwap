@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ClassSwap</title>
+</head>
+<body>
+<!-- Navbar -->
+<nav ng-controller="navCtrl" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ng-click="logoClick()"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <button class="loginBtn" type="button">Login <i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                </li>
+                <!-- <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="portfolio-1-col.html">1 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-2-col.html">2 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-3-col.html">3 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-4-col.html">4 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-item.html">Single Portfolio Item</a>
+                        </li>
+                    </ul>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div ng-controller="homeCtrl" class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control"  placeholder="Search" >
+                    <span class="input-group-addon">
+                        <button type="button">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Available Swaps
+            </h1>
+        </div>
+        <div class="col-md-4">
+            <!-- Repeats for all students in DB -->
+            <div  class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{student[0].username}}</h4>
+                    <button type="button" id="infoBtn" class="btn btn-default">
+                      <i style="float: right; margin-top: -3px;"class="fa fa-info-circle" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <div class="panel-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th><i class="fa fa-folder" aria-hidden="true"></i> Has</th>
+                        <th><i class="fa fa-folder-open" aria-hidden="true"></i> Wants</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr >
+                        <td class="classInfo">
+                          <i class="fa fa-caret-right" aria-hidden="true"></i>Math </br>Gorman </br> ()
+                          <i class="fa fa-caret-right" aria-hidden="true"></i><h5>{{course.courseName}}</h5>
+                          <h6>{{course.professorName}} </br> ({{course.days}} {{course.startTime}} - {{course.endTime}})</h6>
+                        </td>
+                        <td class="classInfo">
+                          <i class="fa fa-caret-right" aria-hidden="true"></i>{{course.courseName}} </br> {{course.professorName}} </br> ({{course.days}} {{course.startTime}} - {{course.endTime}})
+                          <i class="fa fa-caret-right" aria-hidden="true"></i><h5>{{course.courseName}}</h5>
+                          <h6>{{course.professorName}} </br> ({{course.days}} {{course.startTime}} - {{course.endTime}})</h6>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <a href="" ng-click="swap(student[0].username)" class="btn btn-default"><i class="fa fa-exchange" aria-hidden="true"></i> Swap</a>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
