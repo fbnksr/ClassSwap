@@ -5,9 +5,21 @@ var app = angular.module("myapp",['ngRoute'])
 app.config(function($routeProvider) {
   $routeProvider
     .when("/", {
-      templateUrl: "./home.html",
+      templateUrl: "./home.html"
      })
-})
+     .when("/register", {
+       templateUrl: "./register.html"
+     })
+     .when("/login", {
+       templateUrl: "./login.html"
+     })
+     .when("/myAccount", {
+       templateUrl: "./myAccount.html"
+     })
+     .when("/swap", {
+       templateUrl: "./swap.html"
+     })
+});
 
 // Controller for navbar
 app.controller('navCtrl', function($scope, $location, $rootScope, $http){
@@ -29,6 +41,35 @@ app.controller('navCtrl', function($scope, $location, $rootScope, $http){
   }
 
 });
+
+//Controller for swap page
+app.controller('swapCtrl', function($scope, $location, $rootScope, $http){
+
+  //Function called to swap
+  $scope.swap = function(traderName)
+  {
+    if($rootScope.loggedIn)
+    {
+        $rootScope.trader = traderName;
+        $location.path("/swap");
+    }
+    else {
+      {
+        $location.path("/login");
+      }
+    }
+  }
+
+  //Function to confirm swap
+  $scope.confirmSwap = function()
+  {
+    //hides button and displays message of confirmation
+    var div = document.getElementById('swap_button').style.display = 'none';
+    $scope.confirmed = true;
+  }
+
+});
+
 
 //Controller for home page
 app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
@@ -53,6 +94,50 @@ app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
       }
     }
   }
+
+});
+
+
+app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
+
+  $scope.submit = function()
+  {
+    //TODO: HTTP BACKEND CALL TO REGISTER.
+
+
+  }
+
+});
+
+
+//Controller for my account page
+app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
+
+  //Conditionals to control the adding ang deleting buttons
+  $scope.isRemoving = false;
+  $scope.isAdding = false;
+  $scope.remove = function()
+  {
+    $scope.isRemoving = true;
+  }
+  $scope.add = function()
+  {
+    $scope.isAdding = true;
+  }
+
+  $scope.done = function()
+  {
+    $scope.isRemoving = false;
+    $scope.isAdding = false;
+
+  }
+
+  //Function to move you to my account
+  $scope.myAccount = function()
+  {
+    $location.path("/myAccount");
+  }
+
 
 });
 

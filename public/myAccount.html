@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ClassSwap</title>
+</head>
+<body>
+<!-- Navigation -->
+<nav ng-controller="navCtrl" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ng-click="logoClick()"></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <!-- Show this li when logged in -->
+                <!-- <li>
+                    <a href="">My Swaps</a>
+                </li> -->
+                <li>
+                    <button class="loginBtn" type="button" ng-click="logout()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></button>
+                </li>
+                <!-- <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="portfolio-1-col.html">1 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-2-col.html">2 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-3-col.html">3 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-4-col.html">4 Column Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="portfolio-item.html">Single Portfolio Item</a>
+                        </li>
+                    </ul>
+                </li> -->
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div ng-controller="myAccountCtrl" class="container">
+    <!-- Marketing Icons Section -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                My Account
+            </h1>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <!-- <h4><i class="fa fa-user" aria-hidden="true"></i> {{student.username}}</h4>
+                    <button ng-if="isRemoving || isAdding" type="button" id="doneBtn" ng-click="done()" class="btn btn-default">
+                      <i class="fa fa-check" aria-hidden="true"></i> Done
+                    </button>
+                    <button ng-if="!isRemoving && !isAdding" type="button" id="removeBtn" ng-click="remove()" class="btn btn-default">
+                      <i class="fa fa-minus" aria-hidden="true"></i> Remove
+                    </button>
+                    <button ng-if="!isAdding && !isRemoving" type="button" id="addBtn" ng-click="add()" class="btn btn-default">
+                      <i class="fa fa-plus" aria-hidden="true"></i> Add
+                    </button> -->
+                </div>
+                <div class="panel-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th><i class="fa fa-folder" aria-hidden="true"></i> Has</th>
+                        <th><i class="fa fa-folder-open" aria-hidden="true"></i> Wants</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <!-- <td>
+                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
+                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>COP4338</h5>
+                          <h6>Programming 3 - Caryl Rahn <br/> (MW 2 - 3:15 PM)</h6>
+                        </td>
+                        <td>
+                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
+                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>MAD3512</h5>
+                          <h6>Theory of Algorithms - George Kafkoulis <br/> (TR 7:50 - 9 PM)</h6>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
+                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>COP4710</h5>
+                          <h6>Database Management - Jainendra Navlakha <br/> (TR 2 - 3:15 PM)</h6>
+                        </td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
+                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>MAD2104</h5>
+                          <h6>Discrete Math - Susan Gorman <br/> (TR 5 - 6:30 PM)</h6>
+                        </td>
+                      <td></td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    <!-- /.row -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- <p>Copyright &copy; Your Website 2014</p> -->
+            </div>
+        </div>
+    </footer>
+
+</div>
+<!-- /.container -->
+
+</body>
+</html>
