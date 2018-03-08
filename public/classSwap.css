@@ -77,7 +77,7 @@ footer {
 
 /*Logo*/
 .navbar-brand {
-  background: url("../imgs/logo.png")  no-repeat scroll 0 center / contain;
+  background: url("./imgs/logo.png")  no-repeat scroll 0 center / contain;
   display: inline-block;
   max-width: 230px;
   min-width: 180px;
@@ -86,7 +86,7 @@ footer {
   margin: 3px -50px !important;
 }
 .navbar-brand:hover{
-  background: url("../imgs/logoHover.png")  no-repeat scroll 0 center / contain;
+  background: url("./imgs/logoHover.png")  no-repeat scroll 0 center / contain;
   display: inline-block;
   max-width: 230px;
   min-width: 180px;
