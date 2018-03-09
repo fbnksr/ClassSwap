@@ -102,6 +102,13 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
 
   $scope.submit = function()
   {
+    var fname = $scope.fName;
+    var lname = $scope.lName;
+    var email = $scope.email;
+    var username = $scope.username;
+    var pass = $scope.pass;
+    var output = [fname, lname, email, username, pass]
+    console.log(output)
     //TODO: HTTP BACKEND CALL TO REGISTER.
 
 
@@ -162,6 +169,8 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
   {
     var username = $scope.username;
     var pass = $scope.pass;
+    var output = [username, pass]
+    console.log(output)
 
     var body = {
               'username': username,
