@@ -1,18 +1,32 @@
 var mysql = require('mysql')
+var squel = require("squel");
+const server = require ('./config.json')
 
 var con = mysql.createConnection({
-  host: "ocelot.aul.fiu.edu",
-  user: "spr17_fkais001",
-  password: "5727468",
-  database: "spr17_fkais001"
+  host: server.server.host,
+  user: server.server.user,
+  password: server.server.password,
+  database: server.server.database
 });
 
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-  //var sql = "CREATE TABLE customers (name VARCHAR(255), address VARCHAR(255))";
-  //con.query (sql, function(err,result) {
-  //  if(err) throw err;
-  //  console.log("table created");
-  //});
+  var sql = squel.select();
+  sql.from("SECLASS")
+  sql.where("Course_Number = 'CAP 4104'")
+  con.query (sql.toString(), function(err,result) {
+    if(err) throw err;
+    console.log("query executed");
+    console.log(result);
+  });
 });
+/*
+ var addUser  = function (username , password)  {
+
+}
+
+module.exports = {
+  addUser: addUser
+}
+*/
