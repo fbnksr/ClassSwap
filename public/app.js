@@ -105,10 +105,12 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
     var fname = $scope.fName;
     var lname = $scope.lName;
     var email = $scope.email;
-    var username = $scope.username;
     var pass = $scope.pass;
-    var output = [fname, lname, email, username, pass]
-    console.log(output)
+    var body = {'fname': fname,
+                'lname': lname,
+                'email': email,                
+                'password': pass};
+    console.log(body);
     //TODO: HTTP BACKEND CALL TO REGISTER.
 
 
@@ -167,53 +169,44 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
   //Function from log in button
   $scope.submitLogIn = function()
   {
-    var username = $scope.username;
+    var email = $scope.email;
     var pass = $scope.pass;
-    var output = [username, pass]
-    console.log(output)
+    var body = {'email': email,
+                'password': pass};
+    console.log(body);
 
-    var body = {
-              'username': username,
-              'pass': pass
-    };
-
-  //   $http({
-  //             method: "POST",
-  //             url: "/api/login",
-  //             data: body
-  //         }).then(function(res,status,headers) {
-  //             console.log(username + " " + $rootScope.trader);
-  //             if(res.data.error != "Error")
-  //             {
-  //               if(username != $rootScope.trader)
-  //               {
-  //                 $rootScope.loggedIn = true;
-  //                 $scope.username = username;
-  //                 $scope.pass = pass;
-  //                 $rootScope.student = res.data[0].csp;
-  //                 if($rootScope.fromSwap)
-  //                 {
-  //                   $location.path("/swap");
-  //                 }
-  //                 else
-  //                 {
-  //                   $location.path("/myAccount");
-  //                 }
-  //               }
-  //               else
-  //               {
-  //                   $scope.sameUserAlert = true;
-  //                   $scope.showAlert = false;
-  //               }
-  //
-  //             }
-  //             else
-  //             {
-  //               $scope.showAlert = true;
-  //             }
-  //
-  //           })
-}
-
-
+    $http({
+              method: "POST",
+              url: "/login",
+              data: body
+          }).then(function(res,status,headers) {
+              if(res.data.error != "Error")
+              {
+                if(username != $rootScope.trader)
+                {
+                  $rootScope.loggedIn = true;
+                  $scope.email = email;
+                  $scope.pass = pass;
+                  $rootScope.student = res.data[0].csp;
+                  if($rootScope.fromSwap)
+                  {
+                    $location.path("/swap");
+                  }
+                  else
+                  {
+                    $location.path("/myAccount");
+                  }
+                }
+                else
+                {
+                    $scope.sameUserAlert = true;
+                    $scope.showAlert = false;
+                }
+              }
+              else
+              {
+                $scope.showAlert = true;
+              }
+            })
+    }
 });

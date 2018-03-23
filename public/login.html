@@ -53,19 +53,19 @@
           <h1>Log in with your email account</h1>
               <form role="form" action="javascript:;" method="post" id="login-form" autocomplete="off" ng-submit="submitLogIn()">
                   <div class="form-group">
-                      <label for="key" class="sr-only">Username</label>
-                      <input ng-model = "username" type="username" name="key" id="userkey" class="form-control" placeholder="Username">
+                      <label for="key" class="sr-only">Email</label>
+                      <input ng-model = "email" type="email" name="key" id="userkey" class="form-control" placeholder="Email">
                   </div>
                   <div class="form-group">
                       <label for="key" class="sr-only">Password</label>
                       <input ng-model = "pass" type="password" name="key" id="passkey" class="form-control" placeholder="Password">
                   </div>
-                  <!-- <div ng-show="showAlert" class="alert alert-danger">
+                  <div ng-show="showAlert" class="alert alert-danger">
                     <strong>Username or Password Incorrect!</strong><br/> Please try again.
                   </div>
                   <div ng-show="sameUserAlert" class="alert alert-danger">
                     <strong>Same username!</strong><br/> Can't swap with yourself.
-                  </div> -->
+                  </div>
                   <input type="submit" id="btn-login" ng-hide="sameUserAlert" class="btn btn-custom btn-lg btn-block" value="Log In">
                   <!-- <input type="submit" id="btn-login" ng-click="goBack()" ng-show="sameUserAlert" class="btn btn-custom btn-lg btn-block" value="Go Back"> -->
               </form>
