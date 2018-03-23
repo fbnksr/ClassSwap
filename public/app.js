@@ -111,7 +111,39 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
                 'email': email,
                 'password': pass};
     console.log(body);
-    //TODO: HTTP BACKEND CALL TO REGISTER.
+    $http({
+              method: "POST",
+              url: "/createUser",
+              data: body
+          }).then(function(res,status,headers) {
+              if(res.data.error != "Error")
+              {
+                if(email != $rootScope.trader)
+                {
+                  $rootScope.loggedIn = true;
+                  $scope.email = email;
+                  $scope.pass = pass;
+                  $rootScope.student = res.data[0].csp;
+                  if($rootScope.fromSwap)
+                  {
+                    $location.path("/swap");
+                  }
+                  else
+                  {
+                    $location.path("/myAccount");
+                  }
+                }
+                else
+                {
+                    $scope.sameUserAlert = true;
+                    $scope.showAlert = false;
+                }
+              }
+              else
+              {
+                $scope.showAlert = true;
+              }
+            })
 
 
   }
