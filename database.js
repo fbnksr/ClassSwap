@@ -15,11 +15,14 @@ var con = mysql.createConnection({
     .set("Email", email)
     .set("first_name", firstname)
     .set("last_name", lastname)
-    .set("password", password)
+    .set("pw", password)
     con.query (sql.toString(), function(err,result) {
       if(err) throw err;
-      validateUser(email,password)
     });
+    return new Promise((resolve, res) =>
+    validateUser(email,password)
+    .then(resolve(res))
+    .catch(reject("Could not register user.")));
 }
 
 var validateUser = function (email, password) {
@@ -41,5 +44,6 @@ var validateUser = function (email, password) {
 
 module.exports = {
   addUser: addUser,
-  validateUser : validateUser
+  validateUser : validateUser,
+  addUser: addUser
 }

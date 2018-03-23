@@ -118,25 +118,17 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
           }).then(function(res,status,headers) {
               if(res.data.error != "Error")
               {
-                if(email != $rootScope.trader)
+                $rootScope.loggedIn = true;
+                $scope.email = email;
+                $scope.pass = pass;
+                // $rootScope.student = res.data[0].csp;
+                if($rootScope.fromSwap)
                 {
-                  $rootScope.loggedIn = true;
-                  $scope.email = email;
-                  $scope.pass = pass;
-                  $rootScope.student = res.data[0].csp;
-                  if($rootScope.fromSwap)
-                  {
-                    $location.path("/swap");
-                  }
-                  else
-                  {
-                    $location.path("/myAccount");
-                  }
+                  $location.path("/swap");
                 }
                 else
                 {
-                    $scope.sameUserAlert = true;
-                    $scope.showAlert = false;
+                  $location.path("/myAccount");
                 }
               }
               else
@@ -219,7 +211,7 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
                   $rootScope.loggedIn = true;
                   $scope.email = email;
                   $scope.pass = pass;
-                  $rootScope.student = res.data[0].csp;
+                  // $rootScope.student = res.data[0].csp;
                   if($rootScope.fromSwap)
                   {
                     $location.path("/swap");
