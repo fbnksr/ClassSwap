@@ -9,7 +9,7 @@ var con = mysql.createConnection({
   database: server.server.database
 });
 
- var addUser  = function (email , password, firstname , lastname)  {
+ var addUser  = function ( firstname , lastname, email , password)  {
    var sql = squel.insert()
     .into("SEUSER")
     .set("Email", email)
@@ -18,8 +18,7 @@ var con = mysql.createConnection({
     .set("password", password)
     con.query (sql.toString(), function(err,result) {
       if(err) throw err;
-      console.log("query executed");
-      console.log(result);
+      validateUser(email,password)
     });
 }
 
