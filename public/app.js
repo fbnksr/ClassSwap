@@ -108,7 +108,7 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
     var pass = $scope.pass;
     var body = {'fname': fname,
                 'lname': lname,
-                'email': email,                
+                'email': email,
                 'password': pass};
     console.log(body);
     //TODO: HTTP BACKEND CALL TO REGISTER.
@@ -182,7 +182,7 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
           }).then(function(res,status,headers) {
               if(res.data.error != "Error")
               {
-                if(username != $rootScope.trader)
+                if(email != $rootScope.trader)
                 {
                   $rootScope.loggedIn = true;
                   $scope.email = email;
