@@ -9,19 +9,6 @@ var con = mysql.createConnection({
   database: server.server.database
 });
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  var sql = squel.select();
-  sql.from("SECLASS")
-  sql.where("Course_Number = 'CAP 4104'")
-  con.query (sql.toString(), function(err,result) {
-    if(err) throw err;
-    console.log("query executed");
-    console.log(result);
-  });
-});
-
  var addUser  = function (email , password, firstname , lastname)  {
    var sql = squel.insert()
     .into("SEUSER")
@@ -39,14 +26,21 @@ con.connect(function(err) {
 var validateUser = function (email, password) {
   var sql = squel.select()
     .from("SEUSER")
-    .where("Email = \'{0}\'  and password = \'{1}\.".format(email,password))
-    con.query (sql.toString(), function(err,result) {
+    .where("Email = \'"+email+"\'  and pw = \'"+password+"\'")
+
+    return new Promise((resolve , result) =>
+
+    con.query (sql.toString(), function(err,res) {
       if(err) throw err;
-      console.log("query executed");
-      console.log(result);
-    });
+      if (result == [])
+        reject("User Not Found")
+      else
+        resolve(res)
+
+    }));
 }
 
 module.exports = {
-  addUser: addUser
+  addUser: addUser,
+  validateUser : validateUser
 }

@@ -10,6 +10,10 @@ app.post('/createUser', (req, res) => {
 })
 app.post('/login', (req, res) => {
   database.validateUser(req.body.email,req.body.password)
+  .then(data => {
+    res.send(JSON.stringify(data,null,4));
+  })
+  .catch(err=>{res.send({error:err})});
 })
 app.listen(7555, () => {
   console.log('Server running on http://localhost:7555')
