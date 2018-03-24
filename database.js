@@ -23,15 +23,13 @@ var addUser  = function ( firstname , lastname, email , password)  {
         if(err){
           reject("Email already exists.")
         }
-        else {          
+        else {
           validateUser(email,password)
           .then(resolve())
           .catch(reject("Could not register user."))
         }
       });
     });
-
-
 }
 
 // Log user in
@@ -48,22 +46,6 @@ var validateUser = function (email, password) {
       else
         resolve(res)
 
-    }));
-}
-
-// Check if user already exists in database
-var checkUserExist = function (email) {
-  var sql = squel.select()
-    .from("SEUSER")
-    .where("Email = \'" + email + "\'")
-
-    return new Promise((resolve , reject) =>
-    con.query (sql.toString(), function(err,res) {
-      if(err) throw err;
-      if (res.length === 0)
-        resolve(res)
-      else
-        reject("Email already exists.")
     }));
 }
 
