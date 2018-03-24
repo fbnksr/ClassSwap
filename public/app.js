@@ -110,13 +110,12 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
                 'lname': lname,
                 'email': email,
                 'password': pass};
-    console.log(body);
     $http({
               method: "POST",
               url: "/createUser",
               data: body
           }).then(function(res,status,headers) {
-              if(res.data.error != "Error")
+              if(res.data.error != "Email already exists.")
               {
                 $rootScope.loggedIn = true;
                 $scope.email = email;
@@ -197,14 +196,14 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
     var pass = $scope.pass;
     var body = {'email': email,
                 'password': pass};
-    console.log(body);
 
     $http({
               method: "POST",
               url: "/login",
               data: body
           }).then(function(res,status,headers) {
-              if(res.data.error != "Error")
+              console.log(res.data.error)
+              if(res.data.error != "Username or password incorrect.")
               {
                 if(email != $rootScope.trader)
                 {
