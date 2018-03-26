@@ -29,12 +29,9 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                  <div ng-hide="loggedIn">
-                    <button ng-click="login()", class="loginBtn" type="button">Login <i class="fa fa-sign-in" aria-hidden="true"></i></button>
-                  </div>
-                  <div ng-show="loggedIn">
-                    <button ng-click="logout()", class="loginBtn" type="button">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></button>
-                  </div>
+                  <button ng-show="loggedIn" ng-click="myAccount()" class="acntBtn" type="button">My Account <i class="fa fa-archive" aria-hidden="true"></i></button>
+                  <button ng-hide="loggedIn" ng-click="login()", class="loginBtn" type="button">Login <i class="fa fa-sign-in" aria-hidden="true"></i></button>
+                  <button ng-show="loggedIn" ng-click="logout()", class="loginBtn" type="button">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></button>                  
                 </li>
             </ul>
         </div>
@@ -66,9 +63,9 @@
             <div ng-repeat="student in students" class="panel panel-default">
                 <div class="panel-heading">
                     <h4><i class="fa fa-user" aria-hidden="true"></i>  {{student}}</h4>
-                    <button type="button" id="infoBtn" class="btn btn-default">
+                    <!-- <button type="button" id="infoBtn" class="btn btn-default">
                       <i style="float: right; margin-top: -3px;"class="fa fa-info-circle" aria-hidden="true"></i>
-                    </button>
+                    </button> -->
                 </div>
                 <div class="panel-body">
                   <table class="table">

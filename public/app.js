@@ -40,6 +40,12 @@ app.controller('navCtrl', function($scope, $location, $rootScope, $http){
     $location.path("/");
   }
 
+  $scope.myAccount = function()
+  {
+    $location.path("/myAccount");
+  }
+
+
 });
 
 //Controller for swap page
