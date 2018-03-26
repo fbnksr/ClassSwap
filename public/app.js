@@ -229,7 +229,7 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
                   }
                   else
                   {
-                    $location.path("/myAccount");
+                    $location.path("/");
                   }
                 }
                 else
