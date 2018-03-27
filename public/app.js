@@ -226,10 +226,11 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
                   if($rootScope.fromSwap)
                   {
                     $location.path("/swap");
+                    $rootScope.fromSwap = false;
                   }
                   else
                   {
-                    $location.path("/");
+                    $location.path("/myAccount");
                   }
                 }
                 else
