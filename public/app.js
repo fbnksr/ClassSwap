@@ -137,7 +137,8 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
                 // $rootScope.student = res.data[0].csp;
                 if($rootScope.fromSwap)
                 {
-                  $location.path("/swap");
+                  $location.path("/");
+                  $rootScope.swapped = true;
                 }
                 else
                 {
