@@ -51,6 +51,5 @@ var validateUser = function (email, password) {
 
 module.exports = {
   addUser: addUser,
-  validateUser : validateUser,
-  addUser: addUser
+  validateUser : validateUser
 }
