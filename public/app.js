@@ -91,20 +91,22 @@ app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
   {
     if($rootScope.loggedIn)
     {
-        //passes in info of person you want to trade with
-        //goes straight to swap
         $rootScope.trader = traderName;
-        $location.path("/swap");
+        $rootScope.swapped = true;
     }
     else {
       {
-        //passes in info of person you want to trade with
-        //must sign in first
         $rootScope.fromSwap = true;
         $rootScope.trader = traderName;
         $location.path("/login");
       }
     }
+  }
+
+  $scope.changeButton = function(student)
+  {
+    $rootScope.swapped = false;
+    $rootScope.hideStudent = student;
   }
 
 });
@@ -225,7 +227,8 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
                   // $rootScope.student = res.data[0].csp;
                   if($rootScope.fromSwap)
                   {
-                    $location.path("/swap");
+                    $location.path("/");
+                    $rootScope.swapped = true;
                     $rootScope.fromSwap = false;
                   }
                   else
