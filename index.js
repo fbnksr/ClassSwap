@@ -19,7 +19,7 @@ app.post('/login', (req, res) => {
   })
   .catch(err=>{res.send({error:err})});
 })
-app.post('/getClasses', (req, res) => {
+app.get('/getClasses', (req, res) => {
   database.getClasses()
   .then(data => {
     res.send(JSON.stringify(data,null,4));

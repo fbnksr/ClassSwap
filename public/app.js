@@ -79,13 +79,14 @@ app.controller('swapCtrl', function($scope, $location, $rootScope, $http){
 
 //Controller for home page
 app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
-  $scope.students = [
-    "Student_1",
-    "Student_2",
-    "Student_3",
-    "Student_4",
-    "Student_5"
-  ]
+
+  $http({
+            method: "GET",
+            url: "/getClasses"
+        }).then(function(res,status,headers) {
+            $scope.students = res.data            
+          })
+
   // Function to move to swap page
   $scope.swap = function(traderName)
   {
