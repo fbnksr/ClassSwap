@@ -84,7 +84,7 @@ app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
             method: "GET",
             url: "/getClasses"
         }).then(function(res,status,headers) {
-            $scope.students = res.data            
+            $scope.students = res.data
           })
 
   // Function to move to swap page

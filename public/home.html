@@ -91,10 +91,10 @@
                     </tbody>
                   </table>
                   <a href="" ng-hide="hideStudent === key" ng-click="changeButton(key)" class="btn btn-default">Select Classes</a>
-                   <a href="" ng-show="hideStudent === key" ng-click="swap(value.Display_Name)" class="btn btn-default"><i class="fa fa-exchange" aria-hidden="true"></i> Swap</a>
+                   <a href="" ng-show="hideStudent === key" ng-click="swap(key)" class="btn btn-default"><i class="fa fa-exchange" aria-hidden="true"></i> Swap</a>
 
                    <div ng-show="hideStudent === key && swapped" class="alert alert-success">
-                     <strong>Success!</strong> An email has been sent to {{trader}} with your
+                     <strong>Success!</strong> An email has been sent to {{value.Display_Name}} with your
                      contact information to complete the swap!
                    </div>
                 </div>
