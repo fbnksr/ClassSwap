@@ -38,6 +38,7 @@ app.controller('navCtrl', function($scope, $location, $rootScope, $http){
   {
     $rootScope.loggedIn = false;
     $location.path("/");
+    location.reload();
   }
 
   $scope.myAccount = function()
@@ -237,6 +238,7 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
                   {
                     $location.path("/myAccount");
                   }
+                  $rootScope.user = email
                 }
                 else
                 {

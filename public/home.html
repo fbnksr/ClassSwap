@@ -60,7 +60,7 @@
         </div>
         <div class="col-md-4">
             <!-- Repeats for all students in DB -->
-            <div ng-repeat="(key, value) in students" class="panel panel-default">
+            <div ng-repeat="(key, value) in students" ng-if="key != user" class="panel panel-default">
                 <div class="panel-heading">
                     <h4><i class="fa fa-user" aria-hidden="true"></i>  {{value.Display_Name}}</h4>
                     <!-- <button type="button" id="infoBtn" class="btn btn-default">
