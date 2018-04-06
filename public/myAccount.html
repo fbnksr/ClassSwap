@@ -35,26 +35,6 @@
                 <li>
                     <button class="loginBtn" type="button" ng-click="logout()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></button>
                 </li>
-                <!-- <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="portfolio-1-col.html">1 Column Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="portfolio-2-col.html">2 Column Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="portfolio-3-col.html">3 Column Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="portfolio-4-col.html">4 Column Portfolio</a>
-                        </li>
-                        <li>
-                            <a href="portfolio-item.html">Single Portfolio Item</a>
-                        </li>
-                    </ul>
-                </li> -->
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -94,36 +74,34 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <!-- <td>
-                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
-                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>COP4338</h5>
-                          <h6>Programming 3 - Caryl Rahn <br/> (MW 2 - 3:15 PM)</h6>
+                      <tr >
+                        <td class="classInfo">
+                          <div ng-repeat="class in accountInfo.Has">
+                            <i ng-hide="isRemoving" class="fa fa-caret-right" aria-hidden="true"></i>
+                            <input ng-show="isRemoving" type="checkbox" ng-click="removeHas(class)"/>
+                            &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
+                            &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
+                            &nbsp &nbsp {{class.Professor_Name}}
+                            <hr ng-show="!$last">
+                          </div>
                         </td>
-                        <td>
-                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
-                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>MAD3512</h5>
-                          <h6>Theory of Algorithms - George Kafkoulis <br/> (TR 7:50 - 9 PM)</h6>
+                        <td class="classInfo">
+                          <div ng-repeat="class in accountInfo.Wants">
+                            <i ng-hide="isRemoving" class="fa fa-caret-right" aria-hidden="true"></i>
+                            <input ng-show="isRemoving" type="checkbox" ng-click="removeWants(class)"/>
+                            &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
+                            &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
+                            &nbsp &nbsp {{class.Professor_Name}}
+                            <hr ng-show="!$last">
+                          </div>
                         </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
-                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>COP4710</h5>
-                          <h6>Database Management - Jainendra Navlakha <br/> (TR 2 - 3:15 PM)</h6>
-                        </td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i id = "x" ng-if="isRemoving" class="fa fa-times" aria-hidden="true"></i>
-                          <i ng-if="!isRemoving" class="fa fa-caret-right" aria-hidden="true"></i><h5>MAD2104</h5>
-                          <h6>Discrete Math - Susan Gorman <br/> (TR 5 - 6:30 PM)</h6>
-                        </td>
-                      <td></td> -->
                       </tr>
                     </tbody>
                   </table>
+                  <a href="" ng-hide="isAdding || isRemoving" ng-click="add()" class="btn btn-default">Add Class</a>
+                  <a href="" ng-hide="isAdding || isRemoving" ng-click="remove()" class="btn btn-default">Remove Class</a>
+                  <a href="" ng-show="isAdding || isRemoving" ng-click="done()" class="btn btn-default">Done</a>
+                  <a href="" ng-show="isAdding || isRemoving" ng-click="cancel()" class="btn btn-default">Cancel</a>
                 </div>
             </div>
         </div>

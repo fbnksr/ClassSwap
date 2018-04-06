@@ -80,35 +80,61 @@ app.controller('swapCtrl', function($scope, $location, $rootScope, $http){
 
 //Controller for home page
 app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
-
+  $rootScope.hasToSwap = []
+  $rootScope.wantsToSwap = []
   $http({
             method: "GET",
             url: "/getClasses"
         }).then(function(res,status,headers) {
-            $scope.students = res.data
+            $rootScope.students = res.data
           })
 
   // Function to move to swap page
   $scope.swap = function(traderName)
   {
-    if($rootScope.loggedIn)
-    {
-        $rootScope.trader = traderName;
-        $rootScope.swapped = true;
-    }
-    else {
-      {
-        $rootScope.fromSwap = true;
-        $rootScope.trader = traderName;
-        $location.path("/login");
-      }
-    }
+    console.log($rootScope.hasToSwap)
+    console.log($rootScope.wantsToSwap)
+    $rootScope.hasToSwap = []
+    $rootScope.wantsToSwap = []
+
+    $rootScope.trader = traderName;
+    $rootScope.swapped = true;
+    // if($rootScope.loggedIn)
+    // {
+    //     $rootScope.trader = traderName;
+    //     $rootScope.swapped = true;
+    // }
+    // else
+    // {
+    //     $rootScope.fromSwap = true;
+    //     $rootScope.trader = traderName;
+    //     $location.path("/login");
+    // }
+  }
+
+  $scope.checkHas = function(data)
+  {
+    $rootScope.hasToSwap.push(data)
+  }
+
+  $scope.checkWants = function(data)
+  {
+    $rootScope.wantsToSwap.push(data)
   }
 
   $scope.changeButton = function(student)
   {
-    $rootScope.swapped = false;
-    $rootScope.hideStudent = student;
+    if($rootScope.loggedIn)
+    {
+      $rootScope.swapped = false;
+      $rootScope.hideStudent = student;
+    }
+    else
+    {
+      $rootScope.fromSwap = true;
+      $rootScope.trader = student;
+      $location.path("/login");
+    }
   }
 
 });
@@ -161,10 +187,12 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
 
 //Controller for my account page
 app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
-
-  //Conditionals to control the adding ang deleting buttons
+  $scope.accountInfo = $rootScope.students[$rootScope.user]
+  $rootScope.hasToRemove = []
+  $rootScope.wantsToRemove = []
   $scope.isRemoving = false;
   $scope.isAdding = false;
+
   $scope.remove = function()
   {
     $scope.isRemoving = true;
@@ -174,11 +202,31 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
     $scope.isAdding = true;
   }
 
+  $scope.removeHas = function(data)
+  {
+    $rootScope.hasToRemove.push(data)
+  }
+  $scope.removeWants = function(data)
+  {
+    $rootScope.wantsToRemove.push(data)
+  }
+
   $scope.done = function()
+  {
+    console.log($rootScope.hasToRemove)
+    console.log($rootScope.wantsToRemove)
+    $scope.isRemoving = false;
+    $scope.isAdding = false;
+    $rootScope.hasToRemove = []
+    $rootScope.wantsToRemove = []
+  }
+
+  $scope.cancel = function()
   {
     $scope.isRemoving = false;
     $scope.isAdding = false;
-
+    $rootScope.hasToRemove = []
+    $rootScope.wantsToRemove = []
   }
 
   //Function to move you to my account

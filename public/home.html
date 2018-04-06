@@ -77,16 +77,26 @@
                     </thead>
                     <tbody>
                       <tr >
-                        <!-- <td class="classInfo">
-                          <i class="fa fa-caret-right" aria-hidden="true"></i>Math </br>Gorman </br> ()
-                          <i class="fa fa-caret-right" aria-hidden="true"></i><h5>{{course.courseName}}</h5>
-                          <h6>{{course.professorName}} </br> ({{course.days}} {{course.startTime}} - {{course.endTime}})</h6>
+                        <td class="classInfo">
+                          <div ng-repeat="class in value.Has">
+                            <i ng-hide="hideStudent === key" class="fa fa-caret-right" aria-hidden="true"></i>
+                            <input ng-show="hideStudent === key" type="checkbox" name="classCheck" value="class" ng-click="checkHas(class)"/>
+                            &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
+                            &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
+                            &nbsp &nbsp {{class.Professor_Name}}
+                            <hr ng-show="!$last">
+                          </div>
                         </td>
                         <td class="classInfo">
-                          <i class="fa fa-caret-right" aria-hidden="true"></i>{{course.courseName}} </br> {{course.professorName}} </br> ({{course.days}} {{course.startTime}} - {{course.endTime}})
-                          <i class="fa fa-caret-right" aria-hidden="true"></i><h5>{{course.courseName}}</h5>
-                          <h6>{{course.professorName}} </br> ({{course.days}} {{course.startTime}} - {{course.endTime}})</h6>
-                        </td> -->
+                          <div ng-repeat="class in value.Wants">
+                            <i ng-hide="hideStudent === key" class="fa fa-caret-right" aria-hidden="true"></i>
+                            <input ng-show="hideStudent === key" type="checkbox" name="classCheck" value="class" ng-click="checkWants(class)"/>
+                            &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
+                            &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
+                            &nbsp &nbsp {{class.Professor_Name}}
+                            <hr ng-show="!$last">
+                          </div>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
