@@ -82,6 +82,7 @@ app.controller('swapCtrl', function($scope, $location, $rootScope, $http){
 app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
   $rootScope.hasToSwap = []
   $rootScope.wantsToSwap = []
+
   $http({
             method: "GET",
             url: "/getClasses"
@@ -89,11 +90,32 @@ app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
             $rootScope.students = res.data
           })
 
+  // get info on classes that were checked and reset checkboxes
+  $scope.checkedClasses = function()
+  {
+    $rootScope.hasToSwap = []
+    $rootScope.wantsToSwap = []
+
+    var checkboxes = document.querySelectorAll('input[name=has_checked]:checked')
+    for (var i = 0; i < checkboxes.length; i++) {
+      $rootScope.hasToSwap.push(checkboxes[i].value)
+      checkboxes[i].checked = false;
+    }
+
+    checkboxes = document.querySelectorAll('input[name=wants_checked]:checked')
+    for (var i = 0; i < checkboxes.length; i++) {
+      $rootScope.wantsToSwap.push(checkboxes[i].value)
+      checkboxes[i].checked = false;
+    }
+
+    console.log($rootScope.hasToSwap)
+    console.log($rootScope.wantsToSwap)
+  }
+
   // Function to move to swap page
   $scope.swap = function(traderName)
   {
-    console.log($rootScope.hasToSwap)
-    console.log($rootScope.wantsToSwap)
+    $scope.checkedClasses()
     $rootScope.hasToSwap = []
     $rootScope.wantsToSwap = []
 
@@ -110,16 +132,6 @@ app.controller('homeCtrl', function($scope, $location, $rootScope, $http){
     //     $rootScope.trader = traderName;
     //     $location.path("/login");
     // }
-  }
-
-  $scope.checkHas = function(data)
-  {
-    $rootScope.hasToSwap.push(data)
-  }
-
-  $scope.checkWants = function(data)
-  {
-    $rootScope.wantsToSwap.push(data)
   }
 
   $scope.changeButton = function(student)
@@ -188,8 +200,6 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
 //Controller for my account page
 app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   $scope.accountInfo = $rootScope.students[$rootScope.user]
-  $rootScope.hasToRemove = []
-  $rootScope.wantsToRemove = []
   $scope.isRemoving = false;
   $scope.isAdding = false;
 
@@ -202,19 +212,32 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
     $scope.isAdding = true;
   }
 
-  $scope.removeHas = function(data)
+  // get info on classes that were checked and reset checkboxes
+  $scope.checkedClasses = function()
   {
-    $rootScope.hasToRemove.push(data)
-  }
-  $scope.removeWants = function(data)
-  {
-    $rootScope.wantsToRemove.push(data)
+    $rootScope.hasToRemove = []
+    $rootScope.wantsToRemove = []
+
+    var checkboxes = document.querySelectorAll('input[name=has_checked]:checked')
+    for (var i = 0; i < checkboxes.length; i++) {
+      $rootScope.hasToRemove.push(checkboxes[i].value)
+      checkboxes[i].checked = false;
+    }
+
+    checkboxes = document.querySelectorAll('input[name=wants_checked]:checked')
+    for (var i = 0; i < checkboxes.length; i++) {
+      $rootScope.wantsToRemove.push(checkboxes[i].value)
+      checkboxes[i].checked = false;
+    }
+
+    console.log($rootScope.hasToRemove)
+    console.log($rootScope.wantsToRemove)
+
   }
 
   $scope.done = function()
   {
-    console.log($rootScope.hasToRemove)
-    console.log($rootScope.wantsToRemove)
+    $scope.checkedClasses()
     $scope.isRemoving = false;
     $scope.isAdding = false;
     $rootScope.hasToRemove = []

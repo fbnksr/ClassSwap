@@ -80,7 +80,7 @@
                         <td class="classInfo">
                           <div ng-repeat="class in value.Has">
                             <i ng-hide="hideStudent === key" class="fa fa-caret-right" aria-hidden="true"></i>
-                            <input ng-show="hideStudent === key" type="checkbox" name="classCheck" value="class" ng-click="checkHas(class)"/>
+                            <input ng-show="hideStudent === key" type="checkbox" name="has_checked" value="{{class}}"/>
                             &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
                             &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
                             &nbsp &nbsp {{class.Professor_Name}}
@@ -90,7 +90,7 @@
                         <td class="classInfo">
                           <div ng-repeat="class in value.Wants">
                             <i ng-hide="hideStudent === key" class="fa fa-caret-right" aria-hidden="true"></i>
-                            <input ng-show="hideStudent === key" type="checkbox" name="classCheck" value="class" ng-click="checkWants(class)"/>
+                            <input ng-show="hideStudent === key" type="checkbox" name="wants_checked" value="{{class}}"/>
                             &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
                             &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
                             &nbsp &nbsp {{class.Professor_Name}}

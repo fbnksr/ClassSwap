@@ -78,7 +78,7 @@
                         <td class="classInfo">
                           <div ng-repeat="class in accountInfo.Has">
                             <i ng-hide="isRemoving" class="fa fa-caret-right" aria-hidden="true"></i>
-                            <input ng-show="isRemoving" type="checkbox" ng-click="removeHas(class)"/>
+                            <input ng-show="isRemoving" type="checkbox" name="has_checked" value="{{class}}"/>
                             &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
                             &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
                             &nbsp &nbsp {{class.Professor_Name}}
@@ -88,7 +88,7 @@
                         <td class="classInfo">
                           <div ng-repeat="class in accountInfo.Wants">
                             <i ng-hide="isRemoving" class="fa fa-caret-right" aria-hidden="true"></i>
-                            <input ng-show="isRemoving" type="checkbox" ng-click="removeWants(class)"/>
+                            <input ng-show="isRemoving" type="checkbox" name="wants_checked" value="{{class}}"/>
                             &nbsp <strong>{{class.Course_Number}} - {{class.ClassName}}</strong></br>
                             &nbsp &nbsp {{class.Days}} {{class.Start_Time}} - {{class.End_Time}}</br>
                             &nbsp &nbsp {{class.Professor_Name}}
