@@ -220,13 +220,29 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
 
     var checkboxes = document.querySelectorAll('input[name=has_checked]:checked')
     for (var i = 0; i < checkboxes.length; i++) {
-      $rootScope.hasToRemove.push(checkboxes[i].value)
+      var temp = {
+        "Email": "",
+        "Course_Number": "",
+        "Section_Number": ""
+      }
+      temp["Email"] = $rootScope.user
+      temp["Course_Number"] = JSON.parse(checkboxes[i].value).Course_Number
+      temp["Section_Number"] = JSON.parse(checkboxes[i].value).Section_Number
+      $rootScope.hasToRemove.push(temp)
       checkboxes[i].checked = false;
     }
 
     checkboxes = document.querySelectorAll('input[name=wants_checked]:checked')
     for (var i = 0; i < checkboxes.length; i++) {
-      $rootScope.wantsToRemove.push(checkboxes[i].value)
+      var temp = {
+        "Email": "",
+        "Course_Number": "",
+        "Section_Number": ""
+      }
+      temp["Email"] = $rootScope.user
+      temp["Course_Number"] = JSON.parse(checkboxes[i].value).Course_Number
+      temp["Section_Number"] = JSON.parse(checkboxes[i].value).Section_Number
+      $rootScope.wantsToRemove.push(temp)
       checkboxes[i].checked = false;
     }
 
