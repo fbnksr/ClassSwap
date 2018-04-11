@@ -211,11 +211,21 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   $scope.add = function()
   {
     $scope.isAdding = true;
+    $scope.classesCantAdd = []
     // verify that user doesn't already have these classes before adding them
     var dummyAdd = [
       {
         "ClassName": "Fundamentals of Software Testing",
         "Course_Number": "CEN 4072",
+        "Days": "Tu-Th",
+        "End_Time": "7:40 PM",
+        "Professor_Name": "Peter Clarke",
+        "Section_Number": "U01-C",
+        "Start_Time": "6:25 PM"
+      },
+      {
+        "ClassName": "Fundamentals of Software Testing",
+        "Course_Number": "CAP 4104",
         "Days": "Tu-Th",
         "End_Time": "7:40 PM",
         "Professor_Name": "Peter Clarke",
@@ -232,10 +242,12 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
         "Start_Time": "6:25 PM"
       }
     ]
-    
-    for(var i in dummyAdd)
+
+    // iterate in reverse in order to splice
+    for(i = dummyAdd.length-1; i >= 0; i--)
     {
       var cantAdd = false;
+      // check has
       for(var j in $scope.accountInfo.Has)
       {
         if(dummyAdd[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
@@ -243,16 +255,24 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
           cantAdd = true
         }
       }
+      // check wants
+      for(var k in $scope.accountInfo.Wants)
+      {
+        if(dummyAdd[i].Course_Number == $scope.accountInfo.Wants[k].Course_Number)
+        {          
+          cantAdd = true
+        }
+      }
       if(cantAdd)
       {
-        console.log("Class already in list!")
+        // remove classes user already has
         cantAdd = false
-      }
-      else
-      {
-        console.log("Class can be added!")
+        $scope.classesCantAdd.push(dummyAdd[i].Course_Number)
+        dummyAdd.splice(i, 1);
       }
     }
+    console.log(dummyAdd)
+    console.log($scope.classesCantAdd)
   }
 
   // get info on classes that were checked and reset checkboxes
