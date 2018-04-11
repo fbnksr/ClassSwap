@@ -212,8 +212,10 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   {
     $scope.isAdding = true;
     $scope.classesCantAdd = []
+
     // verify that user doesn't already have these classes before adding them
-    var dummyAdd = [
+    // comment out first 3 JSONs to see successful message
+    $scope.dummyAdd = [
       {
         "ClassName": "Fundamentals of Software Testing",
         "Course_Number": "CEN 4072",
@@ -234,6 +236,15 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
       },
       {
         "ClassName": "Fundamentals of Software Testing",
+        "Course_Number": "COP 4338",
+        "Days": "Tu-Th",
+        "End_Time": "7:40 PM",
+        "Professor_Name": "Peter Clarke",
+        "Section_Number": "U01-C",
+        "Start_Time": "6:25 PM"
+      },
+      {
+        "ClassName": "Fundamentals of Software Testing",
         "Course_Number": "CEN 0000",
         "Days": "Tu-Th",
         "End_Time": "7:40 PM",
@@ -244,13 +255,13 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
     ]
 
     // iterate in reverse in order to splice
-    for(i = dummyAdd.length-1; i >= 0; i--)
+    for(i = $scope.dummyAdd.length-1; i >= 0; i--)
     {
       var cantAdd = false;
       // check has
       for(var j in $scope.accountInfo.Has)
       {
-        if(dummyAdd[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
+        if($scope.dummyAdd[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
         {
           cantAdd = true
         }
@@ -258,21 +269,30 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
       // check wants
       for(var k in $scope.accountInfo.Wants)
       {
-        if(dummyAdd[i].Course_Number == $scope.accountInfo.Wants[k].Course_Number)
-        {          
+        if($scope.dummyAdd[i].Course_Number == $scope.accountInfo.Wants[k].Course_Number)
+        {
           cantAdd = true
         }
       }
       if(cantAdd)
       {
-        // remove classes user already has
+        // remove classes user already has but keep them in another array
         cantAdd = false
-        $scope.classesCantAdd.push(dummyAdd[i].Course_Number)
-        dummyAdd.splice(i, 1);
+        $scope.classesCantAdd.push($scope.dummyAdd[i].Course_Number)
+        $scope.dummyAdd.splice(i, 1);
       }
     }
-    console.log(dummyAdd)
+    console.log($scope.dummyAdd)
     console.log($scope.classesCantAdd)
+    // set flag to show alert
+    if($scope.classesCantAdd.length > 0)
+    {
+      $scope.cantAddFlag = true
+    }
+    else
+    {
+      $scope.canAddFlag = true
+    }
   }
 
   // get info on classes that were checked and reset checkboxes
@@ -317,16 +337,20 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   $scope.done = function()
   {
     $scope.checkedClasses()
-    $scope.isRemoving = false;
-    $scope.isAdding = false;
+    $scope.isRemoving = false
+    $scope.isAdding = false
+    $scope.cantAddFlag = false
+    $scope.canAddFlag = false
     $rootScope.hasToRemove = []
     $rootScope.wantsToRemove = []
   }
 
   $scope.cancel = function()
   {
-    $scope.isRemoving = false;
-    $scope.isAdding = false;
+    $scope.isRemoving = false
+    $scope.isAdding = false
+    $scope.cantAddFlag = false
+    $scope.canAddFlag = false
     $rootScope.hasToRemove = []
     $rootScope.wantsToRemove = []
   }

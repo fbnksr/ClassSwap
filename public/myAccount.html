@@ -102,6 +102,16 @@
                   <a href="" ng-hide="isAdding || isRemoving" ng-click="remove()" class="btn btn-default">Remove Class</a>
                   <a href="" ng-show="isAdding || isRemoving" ng-click="done()" class="btn btn-default">Done</a>
                   <a href="" ng-show="isAdding || isRemoving" ng-click="cancel()" class="btn btn-default">Cancel</a>
+
+                  <div ng-show="cantAddFlag" class="alert alert-danger">
+                    <strong>Sorry!</strong> You can't add
+                    <span ng-repeat="class in classesCantAdd">{{$first ? '' : $last ? ' and ' : ', '}}{{class}}</span>
+                    because they are already in your list of classes.
+                  </div>
+                  <div ng-show="canAddFlag" class="alert alert-success">
+                    <strong>Success!</strong> Added
+                    <span ng-repeat="class in dummyAdd">{{$first ? '' : $last ? ' and ' : ', '}}{{class.Course_Number}}</span>!
+                  </div>
                 </div>
             </div>
         </div>
