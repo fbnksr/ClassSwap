@@ -200,6 +200,7 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
 //Controller for my account page
 app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   $scope.accountInfo = $rootScope.students[$rootScope.user]
+  console.log($scope.accountInfo)
   $scope.isRemoving = false;
   $scope.isAdding = false;
 
@@ -210,6 +211,48 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   $scope.add = function()
   {
     $scope.isAdding = true;
+    // verify that user doesn't already have these classes before adding them
+    var dummyAdd = [
+      {
+        "ClassName": "Fundamentals of Software Testing",
+        "Course_Number": "CEN 4072",
+        "Days": "Tu-Th",
+        "End_Time": "7:40 PM",
+        "Professor_Name": "Peter Clarke",
+        "Section_Number": "U01-C",
+        "Start_Time": "6:25 PM"
+      },
+      {
+        "ClassName": "Fundamentals of Software Testing",
+        "Course_Number": "CEN 0000",
+        "Days": "Tu-Th",
+        "End_Time": "7:40 PM",
+        "Professor_Name": "Peter Clarke",
+        "Section_Number": "U01-C",
+        "Start_Time": "6:25 PM"
+      }
+    ]
+    
+    for(var i in dummyAdd)
+    {
+      var cantAdd = false;
+      for(var j in $scope.accountInfo.Has)
+      {
+        if(dummyAdd[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
+        {
+          cantAdd = true
+        }
+      }
+      if(cantAdd)
+      {
+        console.log("Class already in list!")
+        cantAdd = false
+      }
+      else
+      {
+        console.log("Class can be added!")
+      }
+    }
   }
 
   // get info on classes that were checked and reset checkboxes
