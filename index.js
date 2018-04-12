@@ -26,6 +26,38 @@ app.get('/getClasses', (req, res) => {
   })
   .catch(err=>{res.send({error:err})});
 })
+app.get('/addHasClasses', (req, res) => {
+  database.appendHasUser()
+  .then(data => {
+    res.send(JSON.stringify(data,null,4));
+  })
+  .catch(err=>{res.send({error:err})});
+})
+app.get('/addWantsClasses', (req, res) => {
+  database.appendWantsUser()
+  .then(data => {
+    res.send(JSON.stringify(data,null,4));
+  })
+  .catch(err=>{res.send({error:err})});
+})
+app.get('/remHasClasses', (req, res) => {
+  database.removeHasUser()
+  .then(data => {
+    res.send(JSON.stringify(data,null,4));
+  })
+  .catch(err=>{res.send({error:err})});
+})
+app.get('/remWantsClasses', (req, res) => {
+  database.removeWantsUser()
+  .then(data => {
+    res.send(JSON.stringify(data,null,4));
+  })
+  .catch(err=>{res.send({error:err})});
+})
+
+
+
+
 app.listen(7555, () => {
   console.log('Server running on http://localhost:7555')
 })

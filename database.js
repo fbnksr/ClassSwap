@@ -9,6 +9,82 @@ var con = mysql.createConnection({
   database: server.server.database
 });
 
+var appendHasUser  = function (classList)  {
+   var sql = squel.insert()
+    .into("SEHAS")
+    .setFieldsRows(classList)
+    return new Promise((resolve, reject) => {
+      con.query (sql.toString(), function(err,result) {
+        if(err){
+          reject()
+        }
+        else {
+          resolve()
+        }
+      });
+    });
+}
+
+
+var removeHasUser  = function (classList)  {
+  var email = classList[0].Email
+  var classes =  []
+  for (relation of classList){
+    classes.push(relation.Course_Number)
+  }
+  var sql = squel.remove()
+            .from("SEHAS")
+            .where("Email = ? and Course_Number in ?", email, classes)
+  return new Promise((resolve, reject) => {
+    con.query (sql.toString(), function(err,result) {
+      if(err){
+        reject()
+      }
+      else {
+        resolve()
+      }
+    });
+  });
+}
+
+var removeWantsUser  = function (classList)  {
+  var email = classList[0].Email
+  var classes =  []
+  for (relation of classList){
+    classes.push(relation.Course_Number)
+  }
+  var sql = squel.remove()
+            .from("SEWANTS")
+            .where("Email = ? and Course_Number in ?", email, classes)
+  return new Promise((resolve, reject) => {
+    con.query (sql.toString(), function(err,result) {
+      if(err){
+        reject()
+      }
+      else {
+        resolve()
+      }
+    });
+  });
+}
+
+
+var appendWantsUser  = function (classList)  {
+   var sql = squel.insert()
+    .into("SEWANTS")
+    .setFieldsRows(classList)
+    return new Promise((resolve, reject) => {
+      con.query (sql.toString(), function(err,result) {
+        if(err){
+          reject()
+        }
+        else {
+          resolve()
+        }
+      });
+    });
+}
+
 // Register user
 var addUser  = function ( firstname , lastname, email , password)  {
    var sql = squel.insert()
@@ -53,7 +129,7 @@ var getClasses = function () {
       {
         User_List = {}
         for (var x of res)
-        {          
+        {
           if (x.Email in User_List)
           {
             User_List[x.Email].Has.push({"Course_Number": x.Course_Number ,
@@ -120,7 +196,13 @@ var validateUser = function (email, password) {
 
     }));
 }
+
+
 module.exports = {
+  appendHasUser : appendHasUser,
+  removeHasUser : removeHasUser,
+  removeWantsUser : removeWantsUser,
+  appendWantsUser : appendWantsUser,
   addUser: addUser,
   validateUser : validateUser,
   getClasses: getClasses
