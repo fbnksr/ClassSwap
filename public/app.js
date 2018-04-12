@@ -216,36 +216,45 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
     // verify that user doesn't already have these classes before adding them
     // comment out first 3 JSONs to see successful message
     $scope.dummyAdd = [
-      {
-        "ClassName": "Fundamentals of Software Testing",
-        "Course_Number": "CEN 4072",
-        "Days": "Tu-Th",
-        "End_Time": "7:40 PM",
-        "Professor_Name": "Peter Clarke",
-        "Section_Number": "U01-C",
-        "Start_Time": "6:25 PM"
-      },
-      {
-        "ClassName": "Fundamentals of Software Testing",
-        "Course_Number": "CAP 4104",
-        "Days": "Tu-Th",
-        "End_Time": "7:40 PM",
-        "Professor_Name": "Peter Clarke",
-        "Section_Number": "U01-C",
-        "Start_Time": "6:25 PM"
-      },
-      {
-        "ClassName": "Fundamentals of Software Testing",
-        "Course_Number": "COP 4338",
-        "Days": "Tu-Th",
-        "End_Time": "7:40 PM",
-        "Professor_Name": "Peter Clarke",
-        "Section_Number": "U01-C",
-        "Start_Time": "6:25 PM"
-      },
+      // {
+      //   "ClassName": "Fundamentals of Software Testing",
+      //   "Course_Number": "CEN 4072",
+      //   "Days": "Tu-Th",
+      //   "End_Time": "7:40 PM",
+      //   "Professor_Name": "Peter Clarke",
+      //   "Section_Number": "U01-C",
+      //   "Start_Time": "6:25 PM"
+      // },
+      // {
+      //   "ClassName": "Fundamentals of Software Testing",
+      //   "Course_Number": "CAP 4104",
+      //   "Days": "Tu-Th",
+      //   "End_Time": "7:40 PM",
+      //   "Professor_Name": "Peter Clarke",
+      //   "Section_Number": "U01-C",
+      //   "Start_Time": "6:25 PM"
+      // },
+      // {
+      //   "ClassName": "Fundamentals of Software Testing",
+      //   "Course_Number": "COP 4338",
+      //   "Days": "Tu-Th",
+      //   "End_Time": "7:40 PM",
+      //   "Professor_Name": "Peter Clarke",
+      //   "Section_Number": "U01-C",
+      //   "Start_Time": "6:25 PM"
+      // },
       {
         "ClassName": "Fundamentals of Software Testing",
         "Course_Number": "CEN 0000",
+        "Days": "Tu-Th",
+        "End_Time": "7:40 PM",
+        "Professor_Name": "Peter Clarke",
+        "Section_Number": "U01-C",
+        "Start_Time": "6:25 PM"
+      },
+      {
+        "ClassName": "Fundamentals of Software Testing",
+        "Course_Number": "CEN 1111",
         "Days": "Tu-Th",
         "End_Time": "7:40 PM",
         "Professor_Name": "Peter Clarke",
@@ -329,20 +338,92 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
       checkboxes[i].checked = false;
     }
 
-    console.log($rootScope.hasToRemove)
-    console.log($rootScope.wantsToRemove)
+    // console.log($rootScope.hasToRemove)
+    // console.log($rootScope.wantsToRemove)
 
   }
 
   $scope.done = function()
   {
     $scope.checkedClasses()
+    if($scope.isRemoving)
+    {
+      if($rootScope.hasToRemove.length != 0)
+      {
+        $http({
+                  method: "POST",
+                  url: "/remHasClasses",
+                  data: $rootScope.hasToRemove
+              }).then(function(res,status,headers) {
+                for(var i in $rootScope.hasToRemove)
+                {
+                  console.log("here1")
+                  for(var j = $scope.accountInfo.Has.length-1; j >= 0; j--)
+                  {
+                    console.log("here2")
+                    if($rootScope.hasToRemove[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
+                    {
+                      console.log("here3")
+                      $scope.accountInfo.Has.splice(j, 1)
+                    }
+                  }
+                }
+                $rootScope.hasToRemove = []
+              })
+      }
+      if($rootScope.wantsToRemove.length != 0)
+      {
+        $http({
+                  method: "POST",
+                  url: "/remWantsClasses",
+                  data: $rootScope.wantsToRemove
+              }).then(function(res,status,headers) {
+                for(var i in $rootScope.wantsToRemove)
+                {
+                  for(var j = $scope.accountInfo.Wants.length-1; j >= 0; j--)
+                  {
+                    if($rootScope.wantsToRemove[i].Course_Number == $scope.accountInfo.Wants[j].Course_Number)
+                    {
+                      $scope.accountInfo.Wants.splice(j, 1)
+                    }
+                  }
+                }
+                $rootScope.wantsToRemove = []
+              })
+      }
+    }
+
+    // if($scope.isAdding)
+    // {
+    //   if($scope.dummyAdd.length != 0)
+    //   {
+    //     $http({
+    //               method: "POST",
+    //               url: "/remHasClasses",
+    //               data: $rootScope.hasToRemove
+    //           }).then(function(res,status,headers) {
+    //             for(var i in $rootScope.hasToRemove)
+    //             {
+    //               console.log("here1")
+    //               for(var j = $scope.accountInfo.Has.length-1; j >= 0; j--)
+    //               {
+    //                 console.log("here2")
+    //                 if($rootScope.hasToRemove[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
+    //                 {
+    //                   console.log("here3")
+    //                   $scope.accountInfo.Has.splice(j, 1)
+    //                 }
+    //               }
+    //             }
+    //             $rootScope.hasToRemove = []
+    //           })
+    //   }
+    // }
+
     $scope.isRemoving = false
     $scope.isAdding = false
     $scope.cantAddFlag = false
     $scope.canAddFlag = false
-    $rootScope.hasToRemove = []
-    $rootScope.wantsToRemove = []
   }
 
   $scope.cancel = function()

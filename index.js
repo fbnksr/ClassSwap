@@ -26,29 +26,29 @@ app.get('/getClasses', (req, res) => {
   })
   .catch(err=>{res.send({error:err})});
 })
-app.get('/addHasClasses', (req, res) => {
+app.post('/addHasClasses', (req, res) => {
   database.appendHasUser()
   .then(data => {
     res.send(JSON.stringify(data,null,4));
   })
   .catch(err=>{res.send({error:err})});
 })
-app.get('/addWantsClasses', (req, res) => {
+app.post('/addWantsClasses', (req, res) => {
   database.appendWantsUser()
   .then(data => {
     res.send(JSON.stringify(data,null,4));
   })
   .catch(err=>{res.send({error:err})});
 })
-app.get('/remHasClasses', (req, res) => {
-  database.removeHasUser()
+app.post('/remHasClasses', (req, res) => {
+  database.removeHasUser(req.body)
   .then(data => {
     res.send(JSON.stringify(data,null,4));
   })
   .catch(err=>{res.send({error:err})});
 })
-app.get('/remWantsClasses', (req, res) => {
-  database.removeWantsUser()
+app.post('/remWantsClasses', (req, res) => {
+  database.removeWantsUser(req.body)
   .then(data => {
     res.send(JSON.stringify(data,null,4));
   })
