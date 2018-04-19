@@ -26,6 +26,13 @@ app.get('/getClasses', (req, res) => {
   })
   .catch(err=>{res.send({error:err})});
 })
+app.get('/listClasses', (req, res) => {
+  database.listClasses()
+  .then(data => {
+    res.send(JSON.stringify(data,null,4));
+  })
+  .catch(err=>{res.send({error:err})});
+})
 app.post('/addHasClasses', (req, res) => {
   database.appendHasUser()
   .then(data => {

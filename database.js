@@ -1,5 +1,6 @@
-var mysql = require('mysql')
+var mysql = require('mysql');
 var squel = require("squel");
+var nodemail = require('nodemailer');
 const server = require ('./config.json')
 
 var con = mysql.createConnection({
@@ -23,6 +24,46 @@ var appendHasUser  = function (classList)  {
         }
       });
     });
+}
+
+var listClasses = function () {
+  var sql = squel.select()
+   .from("SECLASS")
+   .setFieldsRows(classList)
+   return new Promise((resolve, reject) => {
+     con.query (sql.toString(), function(err,result) {
+       if(err){
+         reject()
+       }
+       else {
+         resolve()
+       }
+     });
+   });
+}
+
+var sendEmail = function (emailInfo) {
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: mail.mail.address,
+      pass: mail.mail.password
+    }
+  });
+  var mailOptions = {
+  from: mail.mail.address,
+  to: 'myfriend@yahoo.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+  };
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
 }
 
 
@@ -199,6 +240,7 @@ var validateUser = function (email, password) {
 
 
 module.exports = {
+  listClasses: listClasses,
   appendHasUser : appendHasUser,
   removeHasUser : removeHasUser,
   removeWantsUser : removeWantsUser,
