@@ -98,7 +98,8 @@
                       </tr>
                     </tbody>
                   </table>
-                  <a href="" ng-hide="isAdding || isRemoving" ng-click="add()" class="btn btn-default">Add Class</a>
+                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Class</button>
+                  <!-- <a href="" ng-hide="isAdding || isRemoving" ng-click="add()" class="btn btn-default">Add Class</a> -->
                   <a href="" ng-hide="isAdding || isRemoving" ng-click="remove()" class="btn btn-default">Remove Class</a>
                   <a href="" ng-show="isAdding || isRemoving" ng-click="done()" class="btn btn-default">Done</a>
                   <a href="" ng-show="isAdding || isRemoving" ng-click="cancel()" class="btn btn-default">Cancel</a>
@@ -116,6 +117,54 @@
             </div>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div ng-controller="modalCtrl" class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+              <form method="post" id="framework_form">
+                <div class="form-group">
+                 <label>Select which Classes you want to add</label>
+                 <select id="framework" name="framework[]" multiple class="form-control" >
+                  <option value="COP0001">COP0001</option>
+                  <option value="COP0002">COP0002</option>
+                  <option value="COP0003">COP0003</option>
+                  <option value="COP0004">COP0004</option>
+                  <option value="COP0005">COP0005</option>
+                  <option value="COP0006">COP0006</option>
+                  <option value="COP0007">COP0007</option>
+                  <option value="COP0008">COP0008</option>
+                  <option value="COP0009">COP0009</option>
+                  <option value="COP0010">COP0010</option>
+                  <option value="COP0011">COP0011</option>
+                  <option value="COP0012">COP0012</option>
+                  <option value="COP0013">COP0013</option>
+                  <option value="COP0014">COP0014</option>
+                  <option value="COP0015">COP0015</option>
+                  <option value="COP0016">COP0016</option>
+                  <option value="COP0017">COP0017</option>
+                  <option value="COP0018">COP0018</option>
+                  <option value="COP0019">COP0019</option>
+                  <option value="COP0020">COP0020</option>
+                 </select>
+                </div>
+               </form>
+            </div>
+            <div class="modal-footer">
+         		<input type="submit" class="btn btn-primary" name="submit" value="Add" />
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>      
 
     <!-- /.row -->
 

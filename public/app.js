@@ -508,3 +508,12 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
             })
     }
 });
+
+app.controller('modalCtrl', function($scope, $location, $rootScope, $http){
+  $('#framework').multiselect({
+   nonSelectedText: 'Select Classes',
+   enableFiltering: true,
+   enableCaseInsensitiveFiltering: true,
+   buttonWidth:'400px'
+  });
+});
