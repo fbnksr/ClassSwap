@@ -529,7 +529,7 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
   $rootScope.addClassesSelected = []
   $timeout(function() {
 
-      $('#example-getting-started').multiselect({
+      $('#select-dropdown').multiselect({
         maxHeight: 400,
         includeSelectAllOption: true,
         selectAllText: 'Select All',
@@ -553,15 +553,15 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
 
   $scope.addClasses = function()
   {
-    $rootScope.addClassesSelected = $('#example-getting-started').val();
+    $rootScope.addClassesSelected = $('#select-dropdown').val();
     console.log($rootScope.addClassesSelected)
-    $("#example-getting-started").multiselect("clearSelection");
-    $rootScope.addClassesSelected = $('#example-getting-started').val();    
+    $("#select-dropdown").multiselect("clearSelection");
+    $rootScope.addClassesSelected = $('#select-dropdown').val();
   }
 
   $scope.close = function()
   {
-    $("#example-getting-started").multiselect("clearSelection");
+    $("#select-dropdown").multiselect("clearSelection");
   }
 
 });
