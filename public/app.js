@@ -210,8 +210,6 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   }
   $scope.add = function()
   {
-    $rootScope.cantAddFlag = false
-    $rootScope.canAddFlag = false
     $scope.isAdding = true;
   }
 
@@ -268,13 +266,10 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
               }).then(function(res,status,headers) {
                 for(var i in $rootScope.hasToRemove)
                 {
-                  console.log("here1")
                   for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
                   {
-                    console.log("here2")
                     if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
                     {
-                      console.log("here3")
                       $rootScope.accountInfo.Has.splice(j, 1)
                     }
                   }
@@ -284,6 +279,7 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
       }
       if($rootScope.wantsToRemove.length != 0)
       {
+        console.log($rootScope.wantsToRemove)
         $http({
                   method: "POST",
                   url: "/remWantsClasses",
@@ -303,33 +299,6 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
               })
       }
     }
-
-    // if($scope.isAdding)
-    // {
-    //   if($scope.dummyAdd.length != 0)
-    //   {
-    //     $http({
-    //               method: "POST",
-    //               url: "/remHasClasses",
-    //               data: $rootScope.hasToRemove
-    //           }).then(function(res,status,headers) {
-    //             for(var i in $rootScope.hasToRemove)
-    //             {
-    //               console.log("here1")
-    //               for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
-    //               {
-    //                 console.log("here2")
-    //                 if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
-    //                 {
-    //                   console.log("here3")
-    //                   $rootScope.accountInfo.Has.splice(j, 1)
-    //                 }
-    //               }
-    //             }
-    //             $rootScope.hasToRemove = []
-    //           })
-    //   }
-    // }
 
     $scope.isRemoving = false
     $scope.isAdding = false
@@ -432,10 +401,20 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
   //  buttonWidth:'400px'
   // });
 
-  $rootScope.addClassesSelected = []
   $timeout(function() {
 
-      $('#select-dropdown').multiselect({
+      $('#select-has-dropdown').multiselect({
+        maxHeight: 400,
+        includeSelectAllOption: true,
+        selectAllText: 'Select All',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        filterPlaceholder: 'Search'
+      });
+  }, 2, false);
+  $timeout(function() {
+
+      $('#select-wants-dropdown').multiselect({
         maxHeight: 400,
         includeSelectAllOption: true,
         selectAllText: 'Select All',
@@ -459,30 +438,49 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
 
   $scope.addClasses = function()
   {
-    $rootScope.temp = []
-    $rootScope.addClassesSelected = $('#select-dropdown').val();
+    $rootScope.cantAddFlag = false
+    $rootScope.canAddFlag = false
+    $rootScope.tempHas = []
+    $rootScope.tempWants = []
+    $rootScope.hasClassesCantAdd = []
+    $rootScope.wantsClassesCantAdd = []
+    $rootScope.classesCantAdd = []
+    $rootScope.classesCanAdd = []
+    $rootScope.hasClassesSelected = $('#select-has-dropdown').val();
+    $rootScope.wantsClassesSelected = $('#select-wants-dropdown').val();
 
     // convert selected values to json object and transfer over to temp (won't work without transfer)
-    for(var i in $rootScope.addClassesSelected)
+    for(var i in $rootScope.hasClassesSelected)
     {
-      $rootScope.addClassesSelected[i] = JSON.parse($rootScope.addClassesSelected[i])
-      $rootScope.temp.push({"Course_Number": $rootScope.addClassesSelected[i].Course_Number})
+      $rootScope.hasClassesSelected[i] = JSON.parse($rootScope.hasClassesSelected[i])
+      $rootScope.tempHas.push({"Course_Number": $rootScope.hasClassesSelected[i].Course_Number})
+    }
+    for(var i in $rootScope.wantsClassesSelected)
+    {
+      $rootScope.wantsClassesSelected[i] = JSON.parse($rootScope.wantsClassesSelected[i])
+      $rootScope.tempWants.push({"Course_Number": $rootScope.wantsClassesSelected[i].Course_Number})
     }
 
-    $rootScope.classesCantAdd = []
+    // NOTE: adjust format of dicts
+    // var temp = {
+    //   "Email": "",
+    //   "Course_Number": "",
+    //   "Section_Number": ""
+    // }
+
 
     // verify that user doesn't already have these classes before adding them
     // comment out first 3 JSONs to see successful message
 
 
     // iterate in reverse in order to splice
-    for(i = $rootScope.addClassesSelected.length-1; i >= 0; i--)
+    for(i = $rootScope.hasClassesSelected.length-1; i >= 0; i--)
     {
       var cantAdd = false;
       // check has
       for(var j in $rootScope.accountInfo.Has)
       {
-        if($rootScope.addClassesSelected[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
+        if($rootScope.hasClassesSelected[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
         {
           cantAdd = true
         }
@@ -490,7 +488,7 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
       // check wants
       for(var k in $rootScope.accountInfo.Wants)
       {
-        if($rootScope.addClassesSelected[i].Course_Number == $rootScope.accountInfo.Wants[k].Course_Number)
+        if($rootScope.hasClassesSelected[i].Course_Number == $rootScope.accountInfo.Wants[k].Course_Number)
         {
           cantAdd = true
         }
@@ -499,31 +497,102 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
       {
         // remove classes user already has but keep them in another array
         cantAdd = false
-        $rootScope.classesCantAdd.push($rootScope.addClassesSelected[i].Course_Number)
-        $rootScope.addClassesSelected.splice(i, 1);
+        $rootScope.hasClassesCantAdd.push($rootScope.hasClassesSelected[i].Course_Number)
+        $rootScope.hasClassesSelected.splice(i, 1);
       }
     }
-    console.log("classes remaining")
-    console.log($rootScope.addClassesSelected)
-    console.log("classes cant add")
-    console.log($rootScope.classesCantAdd)
+    for(i = $rootScope.wantsClassesSelected.length-1; i >= 0; i--)
+    {
+      var cantAdd = false;
+      // check has
+      for(var j in $rootScope.accountInfo.Has)
+      {
+        if($rootScope.wantsClassesSelected[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
+        {
+          cantAdd = true
+        }
+      }
+      // check wants
+      for(var k in $rootScope.accountInfo.Wants)
+      {
+        if($rootScope.wantsClassesSelected[i].Course_Number == $rootScope.accountInfo.Wants[k].Course_Number)
+        {
+          cantAdd = true
+        }
+      }
+      if(cantAdd)
+      {
+        // remove classes user already has but keep them in another array
+        cantAdd = false
+        $rootScope.wantsClassesCantAdd.push($rootScope.wantsClassesSelected[i].Course_Number)
+        $rootScope.wantsClassesSelected.splice(i, 1);
+      }
+    }
+
     // set flag to show alert
-    if($rootScope.classesCantAdd.length > 0)
+    if($rootScope.hasClassesCantAdd.length > 0 || $rootScope.wantsClassesCantAdd.length > 0)
     {
       $rootScope.cantAddFlag = true
+      $rootScope.classesCantAdd = $rootScope.hasClassesCantAdd.concat($rootScope.wantsClassesCantAdd);
     }
     else
     {
       $rootScope.canAddFlag = true
+      $rootScope.classesCanAdd = $rootScope.hasClassesSelected.concat($rootScope.wantsClassesSelected)
+      if($rootScope.hasClassesSelected.length != 0)
+      {
+        $http({
+                  method: "POST",
+                  url: "/appendHasClasses",
+                  data: $rootScope.hasClassesSelected
+              }).then(function(res,status,headers) {
+                for(var i in $rootScope.hasToRemove)
+                {
+                  for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
+                  {
+                    if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
+                    {
+                      $rootScope.accountInfo.Has.splice(j, 1)
+                    }
+                  }
+                }
+                $rootScope.hasToRemove = []
+              })
+      }
+      // if($rootScope.wantsClassesSelected.length != 0)
+      // {
+      //   $http({
+      //             method: "POST",
+      //             url: "/appendWantsClasses",
+      //             data: $rootScope.hasClassesSelected
+      //         }).then(function(res,status,headers) {
+      //           for(var i in $rootScope.hasToRemove)
+      //           {
+      //             for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
+      //             {
+      //               if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
+      //               {
+      //                 $rootScope.accountInfo.Has.splice(j, 1)
+      //               }
+      //             }
+      //           }
+      //           $rootScope.hasToRemove = []
+      //         })
+      // }
     }
 
-    $("#select-dropdown").multiselect("clearSelection");
-    $rootScope.addClassesSelected = $('#select-dropdown').val();
+    $("#select-has-dropdown").multiselect("clearSelection");
+    $rootScope.hasClassesSelected = $('#select-has-dropdown').val();
+    $("#select-wants-dropdown").multiselect("clearSelection");
+    $rootScope.wantsClassesSelected = $('#select-wants-dropdown').val();
   }
 
   $scope.close = function()
   {
-    $("#select-dropdown").multiselect("clearSelection");
+    $rootScope.cantAddFlag = false
+    $rootScope.canAddFlag = false
+    $("#select-has-dropdown").multiselect("clearSelection");
+    $("#select-wants-dropdown").multiselect("clearSelection");
   }
 
 });
