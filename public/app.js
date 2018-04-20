@@ -199,17 +199,8 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
 
 //Controller for my account page
 app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
-  $http({
-            method: "GET",
-            url: "/listClasses"
-        }).then(function(res,status,headers) {
-            $rootScope.allClasses = res.data
-            console.log($rootScope.allClasses)
-
-          })
-
-  $scope.accountInfo = $rootScope.students[$rootScope.user]
-  console.log($scope.accountInfo)
+  $rootScope.accountInfo = $rootScope.students[$rootScope.user]
+  console.log($rootScope.accountInfo)
   $scope.isRemoving = false;
   $scope.isAdding = false;
 
@@ -219,98 +210,9 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
   }
   $scope.add = function()
   {
+    $rootScope.cantAddFlag = false
+    $rootScope.canAddFlag = false
     $scope.isAdding = true;
-    $scope.classesCantAdd = []
-
-    // verify that user doesn't already have these classes before adding them
-    // comment out first 3 JSONs to see successful message
-    $scope.dummyAdd = [
-      // {
-      //   "ClassName": "Fundamentals of Software Testing",
-      //   "Course_Number": "CEN 4072",
-      //   "Days": "Tu-Th",
-      //   "End_Time": "7:40 PM",
-      //   "Professor_Name": "Peter Clarke",
-      //   "Section_Number": "U01-C",
-      //   "Start_Time": "6:25 PM"
-      // },
-      // {
-      //   "ClassName": "Fundamentals of Software Testing",
-      //   "Course_Number": "CAP 4104",
-      //   "Days": "Tu-Th",
-      //   "End_Time": "7:40 PM",
-      //   "Professor_Name": "Peter Clarke",
-      //   "Section_Number": "U01-C",
-      //   "Start_Time": "6:25 PM"
-      // },
-      // {
-      //   "ClassName": "Fundamentals of Software Testing",
-      //   "Course_Number": "COP 4338",
-      //   "Days": "Tu-Th",
-      //   "End_Time": "7:40 PM",
-      //   "Professor_Name": "Peter Clarke",
-      //   "Section_Number": "U01-C",
-      //   "Start_Time": "6:25 PM"
-      // },
-      {
-        "ClassName": "Fundamentals of Software Testing",
-        "Course_Number": "CEN 0000",
-        "Days": "Tu-Th",
-        "End_Time": "7:40 PM",
-        "Professor_Name": "Peter Clarke",
-        "Section_Number": "U01-C",
-        "Start_Time": "6:25 PM"
-      },
-      {
-        "ClassName": "Fundamentals of Software Testing",
-        "Course_Number": "CEN 1111",
-        "Days": "Tu-Th",
-        "End_Time": "7:40 PM",
-        "Professor_Name": "Peter Clarke",
-        "Section_Number": "U01-C",
-        "Start_Time": "6:25 PM"
-      }
-    ]
-
-    // iterate in reverse in order to splice
-    for(i = $scope.dummyAdd.length-1; i >= 0; i--)
-    {
-      var cantAdd = false;
-      // check has
-      for(var j in $scope.accountInfo.Has)
-      {
-        if($scope.dummyAdd[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
-        {
-          cantAdd = true
-        }
-      }
-      // check wants
-      for(var k in $scope.accountInfo.Wants)
-      {
-        if($scope.dummyAdd[i].Course_Number == $scope.accountInfo.Wants[k].Course_Number)
-        {
-          cantAdd = true
-        }
-      }
-      if(cantAdd)
-      {
-        // remove classes user already has but keep them in another array
-        cantAdd = false
-        $scope.classesCantAdd.push($scope.dummyAdd[i].Course_Number)
-        $scope.dummyAdd.splice(i, 1);
-      }
-    }
-    console.log($scope.dummyAdd)
-    console.log($scope.classesCantAdd)
-    // set flag to show alert
-    if($scope.classesCantAdd.length > 0)
-    {
-      $scope.cantAddFlag = true
-    }
-    else
-    {
-      $scope.canAddFlag = true
-    }
   }
 
   // get info on classes that were checked and reset checkboxes
@@ -367,13 +269,13 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
                 for(var i in $rootScope.hasToRemove)
                 {
                   console.log("here1")
-                  for(var j = $scope.accountInfo.Has.length-1; j >= 0; j--)
+                  for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
                   {
                     console.log("here2")
-                    if($rootScope.hasToRemove[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
+                    if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
                     {
                       console.log("here3")
-                      $scope.accountInfo.Has.splice(j, 1)
+                      $rootScope.accountInfo.Has.splice(j, 1)
                     }
                   }
                 }
@@ -389,11 +291,11 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
               }).then(function(res,status,headers) {
                 for(var i in $rootScope.wantsToRemove)
                 {
-                  for(var j = $scope.accountInfo.Wants.length-1; j >= 0; j--)
+                  for(var j = $rootScope.accountInfo.Wants.length-1; j >= 0; j--)
                   {
-                    if($rootScope.wantsToRemove[i].Course_Number == $scope.accountInfo.Wants[j].Course_Number)
+                    if($rootScope.wantsToRemove[i].Course_Number == $rootScope.accountInfo.Wants[j].Course_Number)
                     {
-                      $scope.accountInfo.Wants.splice(j, 1)
+                      $rootScope.accountInfo.Wants.splice(j, 1)
                     }
                   }
                 }
@@ -414,13 +316,13 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
     //             for(var i in $rootScope.hasToRemove)
     //             {
     //               console.log("here1")
-    //               for(var j = $scope.accountInfo.Has.length-1; j >= 0; j--)
+    //               for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
     //               {
     //                 console.log("here2")
-    //                 if($rootScope.hasToRemove[i].Course_Number == $scope.accountInfo.Has[j].Course_Number)
+    //                 if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
     //                 {
     //                   console.log("here3")
-    //                   $scope.accountInfo.Has.splice(j, 1)
+    //                   $rootScope.accountInfo.Has.splice(j, 1)
     //                 }
     //               }
     //             }
@@ -431,16 +333,14 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
 
     $scope.isRemoving = false
     $scope.isAdding = false
-    $scope.cantAddFlag = false
-    $scope.canAddFlag = false
   }
 
   $scope.cancel = function()
   {
     $scope.isRemoving = false
     $scope.isAdding = false
-    $scope.cantAddFlag = false
-    $scope.canAddFlag = false
+    $rootScope.cantAddFlag = false
+    $rootScope.canAddFlag = false
     $rootScope.hasToRemove = []
     $rootScope.wantsToRemove = []
   }
@@ -457,6 +357,12 @@ app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
 
 //Controller for Login/Register page
 app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
+  $http({
+            method: "GET",
+            url: "/listClasses"
+        }).then(function(res,status,headers) {
+            $rootScope.allClasses = res.data
+          })
 
   //Function to go back to home is user tries to swap with themselves
   $scope.goBack = function()
@@ -553,8 +459,64 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
 
   $scope.addClasses = function()
   {
+    $rootScope.temp = []
     $rootScope.addClassesSelected = $('#select-dropdown').val();
+
+    // convert selected values to json object and transfer over to temp (won't work without transfer)
+    for(var i in $rootScope.addClassesSelected)
+    {
+      $rootScope.addClassesSelected[i] = JSON.parse($rootScope.addClassesSelected[i])
+      $rootScope.temp.push({"Course_Number": $rootScope.addClassesSelected[i].Course_Number})
+    }
+
+    $rootScope.classesCantAdd = []
+
+    // verify that user doesn't already have these classes before adding them
+    // comment out first 3 JSONs to see successful message
+
+
+    // iterate in reverse in order to splice
+    for(i = $rootScope.addClassesSelected.length-1; i >= 0; i--)
+    {
+      var cantAdd = false;
+      // check has
+      for(var j in $rootScope.accountInfo.Has)
+      {
+        if($rootScope.addClassesSelected[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
+        {
+          cantAdd = true
+        }
+      }
+      // check wants
+      for(var k in $rootScope.accountInfo.Wants)
+      {
+        if($rootScope.addClassesSelected[i].Course_Number == $rootScope.accountInfo.Wants[k].Course_Number)
+        {
+          cantAdd = true
+        }
+      }
+      if(cantAdd)
+      {
+        // remove classes user already has but keep them in another array
+        cantAdd = false
+        $rootScope.classesCantAdd.push($rootScope.addClassesSelected[i].Course_Number)
+        $rootScope.addClassesSelected.splice(i, 1);
+      }
+    }
+    console.log("classes remaining")
     console.log($rootScope.addClassesSelected)
+    console.log("classes cant add")
+    console.log($rootScope.classesCantAdd)
+    // set flag to show alert
+    if($rootScope.classesCantAdd.length > 0)
+    {
+      $rootScope.cantAddFlag = true
+    }
+    else
+    {
+      $rootScope.canAddFlag = true
+    }
+
     $("#select-dropdown").multiselect("clearSelection");
     $rootScope.addClassesSelected = $('#select-dropdown').val();
   }

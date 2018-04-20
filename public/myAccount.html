@@ -98,11 +98,11 @@
                       </tr>
                     </tbody>
                   </table>
-                  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Class</button>
+                  <button ng-hide="isRemoving" ng-click="add()" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Class</button>
                   <!-- <a href="" ng-hide="isAdding || isRemoving" ng-click="add()" class="btn btn-default">Add Class</a> -->
-                  <a href="" ng-hide="isAdding || isRemoving" ng-click="remove()" class="btn btn-default">Remove Class</a>
-                  <a href="" ng-show="isAdding || isRemoving" ng-click="done()" class="btn btn-default">Done</a>
-                  <a href="" ng-show="isAdding || isRemoving" ng-click="cancel()" class="btn btn-default">Cancel</a>
+                  <a href="" ng-hide="isRemoving" ng-click="remove()" class="btn btn-default">Remove Class</a>
+                  <a href="" ng-show="isRemoving" ng-click="done()" class="btn btn-default">Done</a>
+                  <a href="" ng-show="isRemoving" ng-click="cancel()" class="btn btn-default">Cancel</a>
 
                   <div ng-show="cantAddFlag" class="alert alert-danger">
                     <strong>Sorry!</strong> You can't add
@@ -111,7 +111,7 @@
                   </div>
                   <div ng-show="canAddFlag" class="alert alert-success">
                     <strong>Success!</strong> Added
-                    <span ng-repeat="class in dummyAdd">{{$first ? '' : $last ? ' and ' : ', '}}{{class.Course_Number}}</span>!
+                    <span ng-repeat="class in temp">{{$first ? '' : $last ? ' and ' : ', '}}{{class.Course_Number}}</span>.
                   </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                   <option ng-repeat="class in allClasses" value="{{class}}">{{class.Course_Number}}</option>
                  </select> -->
                  <select id="select-dropdown" multiple="multiple"  name="multiselect[]" data-dropdownmultiselect>
-                   <option data-ng-repeat="option in allClasses" value="{{option}}" data-ng-bind-template="{{option.Course_Number}}">
+                   <option data-ng-repeat="option in allClasses" value="{{option}}" data-ng-bind-template="{{option.Course_Number}}, {{option.Section_Number}}">
                    </option>
                  </select>
                 </div>
