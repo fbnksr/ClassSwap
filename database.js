@@ -29,14 +29,13 @@ var appendHasUser  = function (classList)  {
 var listClasses = function () {
   var sql = squel.select()
    .from("SECLASS")
-   .setFieldsRows(classList)
    return new Promise((resolve, reject) => {
      con.query (sql.toString(), function(err,result) {
        if(err){
          reject()
        }
        else {
-         resolve()
+         resolve(result)
        }
      });
    });

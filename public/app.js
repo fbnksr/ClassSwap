@@ -199,6 +199,15 @@ app.controller('registerCtrl', function($scope, $location, $rootScope, $http){
 
 //Controller for my account page
 app.controller('myAccountCtrl', function($scope, $location, $rootScope, $http){
+  $http({
+            method: "GET",
+            url: "/listClasses"
+        }).then(function(res,status,headers) {
+            $rootScope.allClasses = res.data
+            console.log($rootScope.allClasses)
+
+          })
+
   $scope.accountInfo = $rootScope.students[$rootScope.user]
   console.log($scope.accountInfo)
   $scope.isRemoving = false;
@@ -509,11 +518,50 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
     }
 });
 
-app.controller('modalCtrl', function($scope, $location, $rootScope, $http){
-  $('#framework').multiselect({
-   nonSelectedText: 'Select Classes',
-   enableFiltering: true,
-   enableCaseInsensitiveFiltering: true,
-   buttonWidth:'400px'
-  });
+app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $timeout){
+  // $('#framework').multiselect({
+  //  nonSelectedText: 'Select Classes',
+  //  enableFiltering: true,
+  //  enableCaseInsensitiveFiltering: true,
+  //  buttonWidth:'400px'
+  // });
+
+  $rootScope.addClassesSelected = []
+  $timeout(function() {
+
+      $('#example-getting-started').multiselect({
+        maxHeight: 400,
+        includeSelectAllOption: true,
+        selectAllText: 'Select All',
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        filterPlaceholder: 'Search'
+      });
+  }, 2, false);
+
+  $scope.getOptionId = function(option) {
+      return option.id;
+  };
+
+  // $scope.isOptionSelected = function(option) {
+  //     var selected;
+  //     if (option.selected) {
+  //       selected = "selected"
+  //     }
+  //     return selected;
+  // };
+
+  $scope.addClasses = function()
+  {
+    $rootScope.addClassesSelected = $('#example-getting-started').val();
+    console.log($rootScope.addClassesSelected)
+    $("#example-getting-started").multiselect("clearSelection");
+    $rootScope.addClassesSelected = $('#example-getting-started').val();    
+  }
+
+  $scope.close = function()
+  {
+    $("#example-getting-started").multiselect("clearSelection");
+  }
+
 });
