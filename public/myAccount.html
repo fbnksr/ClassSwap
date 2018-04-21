@@ -122,6 +122,7 @@
               <form method="post" id="framework_form">
                 <div class="form-group">
                  <label>Select which classes you want to add to Has list</label>
+                 <br>
                  <!-- <select id="framework" name="framework[]" multiple="multiple" class="form-control" >
                   <option ng-repeat="class in allClasses" value="{{class}}">{{class.Course_Number}}</option>
                  </select> -->
@@ -129,7 +130,10 @@
                    <option data-ng-repeat="option in allClasses" value="{{option}}" data-ng-bind-template="{{option.Course_Number}}, {{option.Section_Number}}">
                    </option>
                  </select>
+                 <br>
+                 <br>
                  <label>Select which classes you want to add to Wants list</label>
+                 <br>
                  <select id="select-wants-dropdown" multiple="multiple"  name="multiselect[]" data-dropdownmultiselect>
                    <option data-ng-repeat="option in allClasses" value="{{option}}" data-ng-bind-template="{{option.Course_Number}}, {{option.Section_Number}}">
                    </option>

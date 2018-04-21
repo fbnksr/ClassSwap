@@ -10,20 +10,27 @@ var con = mysql.createConnection({
   database: server.server.database
 });
 
+//NOTE: modify query to add multiple rows
 var appendHasUser  = function (classList)  {
-   var sql = squel.insert()
-    .into("SEHAS")
-    .setFieldsRows(classList)
-    return new Promise((resolve, reject) => {
-      con.query (sql.toString(), function(err,result) {
-        if(err){
-          reject()
-        }
-        else {
-          resolve()
-        }
-      });
-    });
+  for(classJson of classList)
+  {
+    var sql = squel.insert()
+     .into("SEHAS")
+     .set("Email", classJson.Email)
+     .set("Course_Number", classJson.Course_Number)
+     .set("Section_Number", classJson.Section_Number)
+     con.query (sql.toString(), function(err,result) {
+       if(err){
+         reject()
+       }
+     });
+
+  }
+  return new Promise((resolve, reject) => {
+    console.log("here")
+    resolve()
+  });
+
 }
 
 var listClasses = function () {
@@ -110,19 +117,23 @@ var removeWantsUser  = function (classList)  {
 
 
 var appendWantsUser  = function (classList)  {
-   var sql = squel.insert()
-    .into("SEWANTS")
-    .setFieldsRows(classList)
-    return new Promise((resolve, reject) => {
-      con.query (sql.toString(), function(err,result) {
-        if(err){
-          reject()
-        }
-        else {
-          resolve()
-        }
-      });
-    });
+  for(classJson of classList)
+  {
+    var sql = squel.insert()
+     .into("SEWANTS")
+     .set("Email", classJson.Email)
+     .set("Course_Number", classJson.Course_Number)
+     .set("Section_Number", classJson.Section_Number)
+     con.query (sql.toString(), function(err,result) {
+       if(err){
+         reject()
+       }
+     });
+
+  }
+  return new Promise((resolve, reject) => {
+    resolve()
+  });
 }
 
 // Register user

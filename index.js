@@ -34,14 +34,14 @@ app.get('/listClasses', (req, res) => {
   .catch(err=>{res.send({error:err})});
 })
 app.post('/addHasClasses', (req, res) => {
-  database.appendHasUser()
+  database.appendHasUser(req.body)
   .then(data => {
     res.send(JSON.stringify(data,null,4));
   })
   .catch(err=>{res.send({error:err})});
 })
 app.post('/addWantsClasses', (req, res) => {
-  database.appendWantsUser()
+  database.appendWantsUser(req.body)
   .then(data => {
     res.send(JSON.stringify(data,null,4));
   })

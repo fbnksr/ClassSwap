@@ -394,12 +394,6 @@ app.controller('loginCtrl', function($scope, $location, $rootScope, $http){
 });
 
 app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $timeout){
-  // $('#framework').multiselect({
-  //  nonSelectedText: 'Select Classes',
-  //  enableFiltering: true,
-  //  enableCaseInsensitiveFiltering: true,
-  //  buttonWidth:'400px'
-  // });
 
   $timeout(function() {
 
@@ -428,14 +422,6 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
       return option.id;
   };
 
-  // $scope.isOptionSelected = function(option) {
-  //     var selected;
-  //     if (option.selected) {
-  //       selected = "selected"
-  //     }
-  //     return selected;
-  // };
-
   $scope.addClasses = function()
   {
     $rootScope.cantAddFlag = false
@@ -444,6 +430,8 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
     $rootScope.tempWants = []
     $rootScope.hasClassesCantAdd = []
     $rootScope.wantsClassesCantAdd = []
+    $rootScope.tempHasClassesSelected = []
+    $rootScope.tempWantsClassesSelected = []
     $rootScope.classesCantAdd = []
     $rootScope.classesCanAdd = []
     $rootScope.hasClassesSelected = $('#select-has-dropdown').val();
@@ -452,26 +440,34 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
     // convert selected values to json object and transfer over to temp (won't work without transfer)
     for(var i in $rootScope.hasClassesSelected)
     {
+      var temp = {
+        "Email": "",
+        "Course_Number": "",
+        "Section_Number": ""
+      }
       $rootScope.hasClassesSelected[i] = JSON.parse($rootScope.hasClassesSelected[i])
+      $rootScope.tempHasClassesSelected[i] = $rootScope.hasClassesSelected[i]
+      temp["Email"] = $rootScope.user
+      temp["Course_Number"] = $rootScope.hasClassesSelected[i].Course_Number
+      temp["Section_Number"] = $rootScope.hasClassesSelected[i].Section_Number
       $rootScope.tempHas.push({"Course_Number": $rootScope.hasClassesSelected[i].Course_Number})
+      $rootScope.hasClassesSelected[i] = temp
     }
     for(var i in $rootScope.wantsClassesSelected)
     {
+      var temp = {
+        "Email": "",
+        "Course_Number": "",
+        "Section_Number": ""
+      }
       $rootScope.wantsClassesSelected[i] = JSON.parse($rootScope.wantsClassesSelected[i])
+      $rootScope.tempWantsClassesSelected[i] = $rootScope.wantsClassesSelected[i]
+      temp["Email"] = $rootScope.user
+      temp["Course_Number"] = $rootScope.wantsClassesSelected[i].Course_Number
+      temp["Section_Number"] = $rootScope.wantsClassesSelected[i].Section_Number
       $rootScope.tempWants.push({"Course_Number": $rootScope.wantsClassesSelected[i].Course_Number})
+      $rootScope.wantsClassesSelected[i] = temp
     }
-
-    // NOTE: adjust format of dicts
-    // var temp = {
-    //   "Email": "",
-    //   "Course_Number": "",
-    //   "Section_Number": ""
-    // }
-
-
-    // verify that user doesn't already have these classes before adding them
-    // comment out first 3 JSONs to see successful message
-
 
     // iterate in reverse in order to splice
     for(i = $rootScope.hasClassesSelected.length-1; i >= 0; i--)
@@ -543,42 +539,32 @@ app.controller('modalCtrl', function($scope, $location, $rootScope, $http, $time
       {
         $http({
                   method: "POST",
-                  url: "/appendHasClasses",
+                  url: "/addHasClasses",
                   data: $rootScope.hasClassesSelected
               }).then(function(res,status,headers) {
-                for(var i in $rootScope.hasToRemove)
+                // update classes displayed       
+                for(var i in $rootScope.tempHasClassesSelected)
                 {
-                  for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
-                  {
-                    if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
-                    {
-                      $rootScope.accountInfo.Has.splice(j, 1)
-                    }
-                  }
+                  $rootScope.accountInfo.Has.push($rootScope.tempHasClassesSelected[i])
                 }
-                $rootScope.hasToRemove = []
+                $rootScope.tempHasClassesSelected = []
               })
       }
-      // if($rootScope.wantsClassesSelected.length != 0)
-      // {
-      //   $http({
-      //             method: "POST",
-      //             url: "/appendWantsClasses",
-      //             data: $rootScope.hasClassesSelected
-      //         }).then(function(res,status,headers) {
-      //           for(var i in $rootScope.hasToRemove)
-      //           {
-      //             for(var j = $rootScope.accountInfo.Has.length-1; j >= 0; j--)
-      //             {
-      //               if($rootScope.hasToRemove[i].Course_Number == $rootScope.accountInfo.Has[j].Course_Number)
-      //               {
-      //                 $rootScope.accountInfo.Has.splice(j, 1)
-      //               }
-      //             }
-      //           }
-      //           $rootScope.hasToRemove = []
-      //         })
-      // }
+      if($rootScope.wantsClassesSelected.length != 0)
+      {
+        $http({
+                  method: "POST",
+                  url: "/addWantsClasses",
+                  data: $rootScope.wantsClassesSelected
+              }).then(function(res,status,headers) {
+                // update classes displayed
+                for(var i in $rootScope.tempWantsClassesSelected)
+                {
+                  $rootScope.accountInfo.Wants.push($rootScope.tempWantsClassesSelected[i])
+                }
+                $rootScope.tempWantsClassesSelected = []
+              })
+      }
     }
 
     $("#select-has-dropdown").multiselect("clearSelection");
